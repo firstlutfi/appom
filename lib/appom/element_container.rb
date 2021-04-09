@@ -205,11 +205,11 @@ module Appom
       # Condition is pass when response is not empty
       #
       def create_existence_checker(element_name, *find_args)
-        method_name = "has_#{element_name}"
+        method_name = "has_#{element_name}?"
         create_helper_method(method_name, *find_args) do
           define_method(method_name) do |*runtime_args|
             args = merge_args(find_args, runtime_args)
-            wait_until('at least one element exists', *args)
+            _check_has_element(*args)
           end
         end
       end
@@ -220,11 +220,11 @@ module Appom
       # Condition is pass when response is empty
       #
       def create_nonexistence_checker(element_name, *find_args)
-        method_name = "has_no_#{element_name}"
+        method_name = "has_no_#{element_name}?"
         create_helper_method(method_name, *find_args) do
           define_method(method_name) do |*runtime_args|
             args = merge_args(find_args, runtime_args)
-            wait_until('no element exists', *args)
+            _check_has_element(*args, exists: false)
           end
         end
       end

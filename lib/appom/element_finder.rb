@@ -37,9 +37,9 @@ module Appom
 
     # Check page has or has not element with find_args
     # If page has element return TRUE else return FALSE
-    def _check_has_element(*find_args)
-      elements = page.find_elements(*find_args)
-      return elements.empty? ? false : true
+    def _check_has_element(*find_args, exists: true)
+      elements = wait_until('at least one element exists', *find_args)
+      exists ? elements : !elements
     end
 
     ##
